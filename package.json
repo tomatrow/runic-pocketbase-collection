@@ -1,0 +1,70 @@
+{
+	"name": "runic-pocketbase-collection",
+	"version": "0.0.1",
+	"scripts": {
+		"dev": "vite dev",
+		"database": "./database/pocketbase serve",
+		"upkeep": "./scripts/upkeep.fish",
+		"start": "./scripts/start.fish",
+		"aider": "./scripts/aider.fish",
+		"build": "vite build && npm run prepack",
+		"preview": "vite preview",
+		"prepare": "svelte-kit sync || echo ''",
+		"prepack": "svelte-kit sync && svelte-package && publint",
+		"check": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json",
+		"check:watch": "svelte-kit sync && svelte-check --tsconfig ./tsconfig.json --watch",
+		"format": "prettier --write .",
+		"lint": "prettier --check . && eslint ."
+	},
+	"files": [
+		"dist",
+		"!dist/**/*.test.*",
+		"!dist/**/*.spec.*"
+	],
+	"sideEffects": [
+		"**/*.css"
+	],
+	"svelte": "./dist/index.js",
+	"types": "./dist/index.d.ts",
+	"type": "module",
+	"exports": {
+		".": {
+			"types": "./dist/index.d.ts",
+			"svelte": "./dist/index.js"
+		}
+	},
+	"packageManager": "pnpm@9.14.4",
+	"peerDependencies": {
+		"pocketbase": "^0.26.1",
+		"svelte": "^5.7.0"
+	},
+	"devDependencies": {
+		"@eslint/compat": "^1.3.0",
+		"@eslint/js": "^9.29.0",
+		"@sveltejs/adapter-auto": "^6.0.1",
+		"@sveltejs/kit": "^2.22.0",
+		"@sveltejs/package": "^2.3.11",
+		"@sveltejs/vite-plugin-svelte": "^5.1.0",
+		"eslint": "^9.29.0",
+		"eslint-config-prettier": "^10.1.5",
+		"eslint-plugin-svelte": "^3.9.3",
+		"globals": "^16.2.0",
+		"prettier": "^3.6.0",
+		"prettier-plugin-svelte": "^3.4.0",
+		"publint": "^0.3.12",
+		"svelte": "^5.34.7",
+		"svelte-check": "^4.2.2",
+		"typescript": "^5.8.3",
+		"typescript-eslint": "^8.34.1",
+		"vite": "^6.3.5",
+		"vite-plugin-devtools-json": "^0.2.0"
+	},
+	"keywords": [
+		"svelte"
+	],
+	"pnpm": {
+		"onlyBuiltDependencies": [
+			"esbuild"
+		]
+	}
+}
