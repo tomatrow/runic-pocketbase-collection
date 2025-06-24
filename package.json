@@ -1,6 +1,7 @@
 {
 	"name": "runic-pocketbase-collection",
 	"version": "0.0.1",
+	"license": "MIT",
 	"scripts": {
 		"dev": "vite dev",
 		"database": "./database/pocketbase serve",
@@ -61,7 +62,8 @@
 		"vite-plugin-devtools-json": "^0.2.0"
 	},
 	"keywords": [
-		"svelte"
+		"svelte",
+		"pocketbase"
 	],
 	"pnpm": {
 		"onlyBuiltDependencies": [

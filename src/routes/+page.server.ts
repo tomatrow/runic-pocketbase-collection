@@ -1,10 +1,20 @@
 import { codeToHtml } from "shiki"
-import taskAppExampleCode from "./TaskAppExample.svelte?raw"
+import rawTaskAppExampleCode from "./TaskAppExample.svelte?raw"
+import rawUsageExampleCode from "./usageExample.js?raw"
 import type { PageServerLoad } from "./$types.js"
 
 export const load: PageServerLoad = async () => {
-	const exampleAppCode = await codeToHtml(
-		taskAppExampleCode.replaceAll("\t", "  ").replace('"$lib"', '"runic-pocketbase-collection"'),
+	const usageExampleCode = await codeToHtml(
+		rawUsageExampleCode.replaceAll("\t", "  ").replace('"$lib"', '"runic-pocketbase-collection"'),
+		{
+			lang: "typescript",
+			defaultColor: "light-dark()",
+			themes: { light: "solarized-light", dark: "solarized-dark" }
+		}
+	)
+
+	const taskAppExampleCode = await codeToHtml(
+		rawTaskAppExampleCode.replaceAll("\t", "  ").replace('"$lib"', '"runic-pocketbase-collection"'),
 		{
 			lang: "svelte",
 			defaultColor: "light-dark()",
@@ -12,5 +22,5 @@ export const load: PageServerLoad = async () => {
 		}
 	)
 
-	return { exampleAppCode }
+	return { usageExampleCode, taskAppExampleCode }
 }
