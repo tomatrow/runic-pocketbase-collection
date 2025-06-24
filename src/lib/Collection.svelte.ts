@@ -29,7 +29,7 @@ export class Collection<M extends RecordModel = RecordModel> {
 	constructor(recordService: RecordService<M>, options?: RecordSubscribeOptions) {
 		this.#recordService = recordService
 		this.#subscribe = createSubscriber((update) => {
-			this.load()
+			this.reload()
 
 			const unsubscribePromise = this.#recordService.subscribe(
 				"*",
@@ -55,7 +55,7 @@ export class Collection<M extends RecordModel = RecordModel> {
 		})
 	}
 
-	async load(options?: RecordFullListOptions) {
+	async reload(options?: RecordFullListOptions) {
 		const records = await this.#recordService.getFullList(options)
 		for (const record of records) this.#records[record.id] = record
 	}
@@ -114,6 +114,14 @@ export class Collection<M extends RecordModel = RecordModel> {
 		this.#subscribe()
 		return this.#optimisticRecords
 	}
+}
+
+/** create 15 character alphanumeric id for pocketbase */
+export function pbid() {
+	return [...crypto.randomUUID()]
+		.filter((char) => char !== "-")
+		.slice(0, 15)
+		.join("")
 }
 
 /** pocketbase interprets nulling a record property as deleting a property */
