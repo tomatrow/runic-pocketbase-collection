@@ -3,6 +3,8 @@ import rawTaskAppExampleCode from "./TaskAppExample.svelte?raw"
 import rawUsageExampleCode from "./usageExample.js?raw"
 import type { PageServerLoad } from "./$types.js"
 
+export const prerender = true
+
 export const load: PageServerLoad = async () => {
 	const usageExampleCode = await codeToHtml(
 		rawUsageExampleCode.replaceAll("\t", "  ").replace('"$lib"', '"runic-pocketbase-collection"'),
