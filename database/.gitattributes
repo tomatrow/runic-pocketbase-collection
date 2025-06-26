@@ -1,7 +1,0 @@
-pocketbase filter=lfs diff=lfs merge=lfs -text
-pb_data/auxiliary.db filter=lfs diff=lfs merge=lfs -text
-pb_data/data.db filter=lfs diff=lfs merge=lfs -text
-pb_data/auxiliary.db-shm filter=lfs diff=lfs merge=lfs -text
-pb_data/data.db-shm filter=lfs diff=lfs merge=lfs -text
-pb_data/auxiliary.db-wal filter=lfs diff=lfs merge=lfs -text
-pb_data/data.db-wal filter=lfs diff=lfs merge=lfs -text
