@@ -25,3 +25,7 @@ vite.config.ts.timestamp-*
 
 # Aider
 .aider*
+
+# Pocketbase
+database
+!database/pb_migrations/*
