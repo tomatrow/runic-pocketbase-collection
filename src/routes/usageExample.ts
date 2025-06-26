@@ -6,7 +6,7 @@ let pb = new PocketBase("http://127.0.0.1:8090")
 pb.autoCancellation(false)
 let tasks = new Collection<RecordModel & { text?: string; done?: boolean }>(pb.collection("tasks"))
 
-// creates
+// creates 15 character alphanumeric id
 let id = pbid()
 
 // create
