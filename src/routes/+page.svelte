@@ -3,6 +3,7 @@
 	import { Collection } from "$lib"
 	import TaskAppExample from "./TaskAppExample.svelte"
 	import { dev } from "$app/environment"
+	import { base } from "$app/paths"
 
 	let { data } = $props()
 
@@ -18,9 +19,9 @@
 
 	<nav>
 		<ul>
-			<li><a href="/">home</a></li>
+			<li><a href="{base}/">home</a></li>
 			<li>
-				<a target="blank" href="https://tomatrow.github.io/runic-pocketbase-collection">
+				<a target="blank" href="https://github.com/tomatrow/runic-pocketbase-collection">
 					github repo
 				</a>
 			</li>
