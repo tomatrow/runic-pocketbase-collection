@@ -9,6 +9,7 @@
 		"start": "./scripts/start.fish",
 		"aider": "./scripts/aider.fish",
 		"build": "vite build && npm run prepack",
+		"deploy": "pnpm run build && pnpx gh-pages --nojekyll -d build",
 		"preview": "vite preview",
 		"prepare": "svelte-kit sync || echo ''",
 		"prepack": "svelte-kit sync && svelte-package && publint",
