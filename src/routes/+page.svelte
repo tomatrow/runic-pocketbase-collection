@@ -20,7 +20,7 @@
 		<ul>
 			<li><a href="/">home</a></li>
 			<li>
-				<a target="blank" href="https://tomatrow.github.com/runic-pocketbase-collection">
+				<a target="blank" href="https://tomatrow.github.io/runic-pocketbase-collection">
 					github repo
 				</a>
 			</li>
@@ -61,6 +61,26 @@
 		{/if}
 
 		{@html data.taskAppExampleCode}
+	</section>
+
+	<section>
+		<h2>Development</h2>
+		<p>
+			You'll need to add a <a target="_blank" href="https://pocketbase.io/docs/"
+				>pocketbase executable</a
+			> to the database directory.
+		</p>
+		<p>
+			The following start script assumes you have <a target="_blank" href="https://pnpm.io">pnpm</a>
+			/ <a target="_blank" href="https://github.com/tmux/tmux/wiki">tmux</a> /
+			<a target="_blank" href="https://fishshell.com">fish</a>
+			installed.
+		</p>
+		<pre>
+<code>pnpm i</code>
+<code>pnpm run start</code>
+<code># pocketbase now running at http://127.0.0.1:8090/_</code>
+<code># sveltekit app now running at http://localhost:5173</code></pre>
 	</section>
 </main>
 
