@@ -1,6 +1,6 @@
 import { codeToHtml } from "shiki"
 import rawTaskAppExampleCode from "./TaskAppExample.svelte?raw"
-import rawUsageExampleCode from "./usageExample.js?raw"
+import rawUsageExampleCode from "./usageExample.svelte.js?raw"
 import type { PageServerLoad } from "./$types.js"
 
 export const prerender = true
