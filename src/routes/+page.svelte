@@ -48,6 +48,8 @@
 
 	<section>
 		<h2>Usage</h2>
+
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html data.usageExampleCode}
 	</section>
 
@@ -61,6 +63,7 @@
 			<img class="only-on-dark" alt="example task app" src="images/example-task-app-dark.png" />
 		{/if}
 
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html data.taskAppExampleCode}
 	</section>
 
