@@ -9,6 +9,7 @@ import type {
 
 export class Collection<M extends RecordModel = RecordModel> {
 	#recordService: RecordService<M>
+	#options?: RecordSubscribeOptions
 	#subscribe: () => void
 	#records = $state<Record<string, M>>({})
 	#inflightUpdates = $state<Record<string, { count: number; latestRecord: M | null }>>({})
@@ -27,9 +28,10 @@ export class Collection<M extends RecordModel = RecordModel> {
 	)
 
 	constructor(recordService: RecordService<M>, options?: RecordSubscribeOptions) {
+		this.#options = options
 		this.#recordService = recordService
 		this.#subscribe = createSubscriber((update) => {
-			this.reload()
+			this.reload(this.#options)
 
 			const unsubscribePromise = this.#recordService.subscribe(
 				"*",
@@ -46,7 +48,7 @@ export class Collection<M extends RecordModel = RecordModel> {
 							break
 					}
 				},
-				options
+				this.#options
 			)
 
 			return () => {
@@ -56,7 +58,7 @@ export class Collection<M extends RecordModel = RecordModel> {
 	}
 
 	async reload(options?: RecordFullListOptions) {
-		const records = await this.#recordService.getFullList(options)
+		const records = await this.#recordService.getFullList(options ?? this.#options)
 		for (const record of records) this.#records[record.id] = record
 	}
 
@@ -66,6 +68,7 @@ export class Collection<M extends RecordModel = RecordModel> {
 	) {
 		const results = await Promise.allSettled(
 			Object.entries(recordsUpdate).map(async ([id, recordUpdate]) => {
+				options ??= this.#options
 				if (typeof options === "function") options = options(id)
 
 				if (recordUpdate) {
@@ -131,7 +134,9 @@ export type RecordUpdate<M> = {
 	> | null
 }
 
-type DeepPartial<T> = { [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P] }
+type DeepPartial<T> = T extends object
+	? { [P in keyof T]?: T[P] extends object ? DeepPartial<T[P]> : T[P] }
+	: T
 
 /**
  * Performs a deep equality comparison between two values.
