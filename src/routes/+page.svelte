@@ -68,6 +68,13 @@
 	</section>
 
 	<section>
+		<h2>Advanced Usage</h2>
+
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html data.advancedUsageExampleCode}
+	</section>
+
+	<section>
 		<h2>Development</h2>
 		<p>
 			You'll need to add a <a target="_blank" href="https://pocketbase.io/docs/"

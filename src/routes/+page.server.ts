@@ -1,6 +1,7 @@
 import { codeToHtml } from "shiki"
 import rawTaskAppExampleCode from "./TaskAppExample.svelte?raw"
 import rawUsageExampleCode from "./usageExample.svelte.js?raw"
+import rawAdvancedUsageExampleCode from "./advancedUsageExample.svelte.js?raw"
 import type { PageServerLoad } from "./$types.js"
 
 export const prerender = true
@@ -8,6 +9,17 @@ export const prerender = true
 export const load: PageServerLoad = async () => {
 	const usageExampleCode = await codeToHtml(
 		rawUsageExampleCode.replaceAll("\t", "  ").replace('"$lib"', '"runic-pocketbase-collection"'),
+		{
+			lang: "typescript",
+			defaultColor: "light-dark()",
+			themes: { light: "solarized-light", dark: "solarized-dark" }
+		}
+	)
+
+	const advancedUsageExampleCode = await codeToHtml(
+		rawAdvancedUsageExampleCode
+			.replaceAll("\t", "  ")
+			.replace('"$lib"', '"runic-pocketbase-collection"'),
 		{
 			lang: "typescript",
 			defaultColor: "light-dark()",
@@ -24,5 +36,5 @@ export const load: PageServerLoad = async () => {
 		}
 	)
 
-	return { usageExampleCode, taskAppExampleCode }
+	return { usageExampleCode, taskAppExampleCode, advancedUsageExampleCode }
 }
