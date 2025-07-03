@@ -31,7 +31,7 @@
 </header>
 
 <main>
-	<section>
+	<section id="intro">
 		<p>A pocketbase collection wrapper for Svelte</p>
 
 		<ul>
@@ -46,14 +46,14 @@
 		<code>pnpm i -D runic-pocketbase-collection</code>
 	</section>
 
-	<section>
+	<section id="usage">
 		<h2>Usage</h2>
 
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html data.usageExampleCode}
 	</section>
 
-	<section>
+	<section id="task-example-app">
 		<h2>Task App Example</h2>
 
 		{#if dev}
@@ -67,14 +67,14 @@
 		{@html data.taskAppExampleCode}
 	</section>
 
-	<section>
+	<section id="advanced-usage">
 		<h2>Advanced Usage</h2>
 
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
 		{@html data.advancedUsageExampleCode}
 	</section>
 
-	<section>
+	<section id="development">
 		<h2>Development</h2>
 		<p>
 			You'll need to add a <a target="_blank" href="https://pocketbase.io/docs/"
