@@ -13,7 +13,7 @@ let id = pbid()
 tasks.update({ [id]: { text: "New task" } })
 
 // read
-console.log(tasks.records[id].task) // logs: "New task"
+console.log(tasks.records[id].text) // logs: "New task"
 
 // update
 tasks.update({ [id]: { done: true } })
