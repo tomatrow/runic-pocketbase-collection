@@ -15,7 +15,7 @@
 				<input
 					type="checkbox"
 					indeterminate={taskList.some((task) => task.done) && taskList.some((task) => !task.done)}
-					checked={taskList.length && taskList.every((task) => task.done)}
+					checked={!!taskList.length && taskList.every((task) => task.done)}
 					onclick={() =>
 						tasks.update(
 							Object.fromEntries(
