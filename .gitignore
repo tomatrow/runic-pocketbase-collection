@@ -29,3 +29,6 @@ vite.config.ts.timestamp-*
 # Pocketbase
 database
 !database/pb_migrations/*
+
+.nova
+
