@@ -1,6 +1,6 @@
 <script lang="ts">
 	import { type RecordModel } from "pocketbase"
-	import { Collection, pbid } from "$lib"
+	import { Collection, pbid } from "$lib/index.js"
 
 	let { tasks }: { tasks: Collection<RecordModel & { text?: string; done?: boolean }> } = $props()
 

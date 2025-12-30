@@ -1,5 +1,5 @@
 import PocketBase from "pocketbase"
-import { Collection, pbid } from "$lib"
+import { Collection, pbid } from "$lib/index.js"
 
 // explicit model type
 interface TaskModel {
@@ -15,14 +15,14 @@ interface TaskModel {
 }
 
 // minimal pocketbase setup
-let pb = new PocketBase("http://127.0.0.1:8090")
+const pb = new PocketBase("http://127.0.0.1:8090")
 pb.autoCancellation(false)
 
 // wrap task collection and expand subtasks
-let tasks = new Collection<TaskModel>(pb.collection("tasks"), { expand: "subtasks" })
+const tasks = new Collection<TaskModel>(pb.collection("tasks"), { expand: "subtasks" })
 
-let parentTaskId = pbid()
-let childTaskId = pbid()
+const parentTaskId = pbid()
+const childTaskId = pbid()
 
 // create a parent and child task
 await tasks.update({
@@ -32,5 +32,5 @@ await tasks.update({
 
 // read expanded task
 console.log(
-	tasks.records[parentTaskId].expand.subtasks.some((subtask) => subtask.id === childTaskId)
+	tasks.records[parentTaskId]?.expand.subtasks.some((subtask) => subtask.id === childTaskId)
 ) // logs: true

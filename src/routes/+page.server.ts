@@ -8,7 +8,9 @@ export const prerender = true
 
 export const load: PageServerLoad = async () => {
 	const usageExampleCode = await codeToHtml(
-		rawUsageExampleCode.replaceAll("\t", "  ").replace('"$lib"', '"runic-pocketbase-collection"'),
+		rawUsageExampleCode
+			.replaceAll("\t", "  ")
+			.replace('"$lib/index.js"', '"runic-pocketbase-collection"'),
 		{
 			lang: "typescript",
 			defaultColor: "light-dark()",
@@ -19,7 +21,7 @@ export const load: PageServerLoad = async () => {
 	const advancedUsageExampleCode = await codeToHtml(
 		rawAdvancedUsageExampleCode
 			.replaceAll("\t", "  ")
-			.replace('"$lib"', '"runic-pocketbase-collection"'),
+			.replace('"$lib/index.js"', '"runic-pocketbase-collection"'),
 		{
 			lang: "typescript",
 			defaultColor: "light-dark()",
@@ -28,7 +30,9 @@ export const load: PageServerLoad = async () => {
 	)
 
 	const taskAppExampleCode = await codeToHtml(
-		rawTaskAppExampleCode.replaceAll("\t", "  ").replace('"$lib"', '"runic-pocketbase-collection"'),
+		rawTaskAppExampleCode
+			.replaceAll("\t", "  ")
+			.replace('"$lib/index.js"', '"runic-pocketbase-collection"'),
 		{
 			lang: "svelte",
 			defaultColor: "light-dark()",
