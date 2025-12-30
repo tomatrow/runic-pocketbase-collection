@@ -19,7 +19,9 @@ const pb = new PocketBase("http://127.0.0.1:8090")
 pb.autoCancellation(false)
 
 // wrap task collection and expand subtasks
-const tasks = new Collection<TaskModel>(pb.collection("tasks"), { expand: "subtasks" })
+const tasks = new Collection<TaskModel>(pb.collection("tasks"), {
+	options: { expand: "subtasks" }
+})
 
 const parentTaskId = pbid()
 const childTaskId = pbid()

@@ -46,11 +46,11 @@
 		<code>pnpm i -D runic-pocketbase-collection</code>
 	</section>
 
-	<section id="usage">
-		<h2>Usage</h2>
+	<section id="collection-usage">
+		<h2>Collection Usage</h2>
 
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html data.usageExampleCode}
+		{@html data.collectionUsageExampleCode}
 	</section>
 
 	<section id="task-example-app">
@@ -67,11 +67,25 @@
 		{@html data.taskAppExampleCode}
 	</section>
 
-	<section id="advanced-usage">
-		<h2>Advanced Usage</h2>
+	<section id="advanced-collection-usage">
+		<h2>Advanced Collection Usage</h2>
 
 		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
-		{@html data.advancedUsageExampleCode}
+		{@html data.advancedCollectionUsageExampleCode}
+	</section>
+
+	<section id="item-usage">
+		<h2>Item Usage</h2>
+
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html data.itemUsageExampleCode}
+	</section>
+
+	<section id="advanced-item-usage">
+		<h2>Advanced Item Usage</h2>
+
+		<!-- eslint-disable-next-line svelte/no-at-html-tags -->
+		{@html data.advancedItemUsageExampleCode}
 	</section>
 
 	<section id="development">
