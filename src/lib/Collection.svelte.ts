@@ -9,7 +9,7 @@ import { RunicRecordService } from "./RunicRecordService.svelte.js"
 import type { UpdateOverride, RecordUpdate } from "./common.js"
 
 export class Collection<M extends RecordModel = RecordModel> {
-	#wrapper: RunicRecordService<M>
+	#service: RunicRecordService<M>
 
 	constructor(
 		recordService: RecordService<M>,
@@ -23,7 +23,7 @@ export class Collection<M extends RecordModel = RecordModel> {
 			onError?(error: ClientResponseError): void
 		} = {}
 	) {
-		this.#wrapper = new RunicRecordService(recordService, "*", {
+		this.#service = new RunicRecordService(recordService, "*", {
 			options,
 			onError,
 			autoRefetch,
@@ -38,7 +38,7 @@ export class Collection<M extends RecordModel = RecordModel> {
 		options?: SendOptions
 		onError?(error: ClientResponseError): void
 	} = {}) {
-		this.#wrapper.refetch({ options, onError })
+		await this.#service.refetch({ options, onError })
 	}
 
 	async update(
@@ -53,14 +53,14 @@ export class Collection<M extends RecordModel = RecordModel> {
 			onError?(error: ClientResponseError): void
 		} = {}
 	) {
-		await this.#wrapper.update(recordsUpdate, { options, override, onError })
+		await this.#service.update(recordsUpdate, { options, override, onError })
 	}
 
 	get records() {
-		return this.#wrapper.records
+		return this.#service.records
 	}
 
 	get lastFetchedAt() {
-		return this.#wrapper.lastFetchedAt
+		return this.#service.lastFetchedAt
 	}
 }
