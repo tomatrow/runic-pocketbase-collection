@@ -1,6 +1,5 @@
 import type {
 	ClientResponseError,
-	RecordOptions,
 	RecordModel,
 	RecordService,
 	RecordSubscribeOptions,
@@ -13,23 +12,38 @@ export class Item<M extends RecordModel = RecordModel> {
 	#wrapper: RunicRecordService<M>
 	#id: string
 
-	constructor(recordService: RecordService<M>, id: string, options?: RecordSubscribeOptions) {
-		this.#wrapper = new RunicRecordService(recordService, id, options)
+	constructor(
+		recordService: RecordService<M>,
+		id: string,
+		{
+			options,
+			autoRefetch,
+			onError = console.error
+		}: {
+			autoRefetch?: boolean
+			options?: RecordSubscribeOptions
+			onError?(error: ClientResponseError): void
+		} = {}
+	) {
+		this.#wrapper = new RunicRecordService(recordService, id, {
+			options,
+			onError,
+			autoRefetch,
+			fetchRecords: async (options) => {
+				return [await recordService.getOne(id, options)]
+			}
+		})
 		this.#id = id
 	}
 
-	async reload({
+	async refetch({
 		options,
 		onError = console.error
 	}: {
-		options?: RecordOptions
+		options?: SendOptions
 		onError?(error: ClientResponseError): void
 	} = {}) {
-		try {
-			this.#wrapper.records[this.#id] = await this.#wrapper.service.getOne(this.#id, options)
-		} catch (error) {
-			onError(error as ClientResponseError)
-		}
+		await this.#wrapper.refetch({ options, onError })
 	}
 
 	async update(
@@ -61,6 +75,10 @@ export class Item<M extends RecordModel = RecordModel> {
 	}
 
 	get record() {
-		return this.#wrapper.getRecords()[this.#id]
+		return this.#wrapper.records[this.#id]
+	}
+
+	get lastFetchedAt() {
+		return this.#wrapper.lastFetchedAt
 	}
 }

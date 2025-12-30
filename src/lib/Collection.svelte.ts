@@ -1,6 +1,5 @@
 import type {
 	ClientResponseError,
-	RecordFullListOptions,
 	RecordModel,
 	RecordService,
 	RecordSubscribeOptions,
@@ -12,23 +11,34 @@ import type { UpdateOverride, RecordUpdate } from "./common.js"
 export class Collection<M extends RecordModel = RecordModel> {
 	#wrapper: RunicRecordService<M>
 
-	constructor(recordService: RecordService<M>, options?: RecordSubscribeOptions) {
-		this.#wrapper = new RunicRecordService(recordService, "*", options)
+	constructor(
+		recordService: RecordService<M>,
+		{
+			options,
+			autoRefetch,
+			onError = console.error
+		}: {
+			autoRefetch?: boolean
+			options?: RecordSubscribeOptions
+			onError?(error: ClientResponseError): void
+		} = {}
+	) {
+		this.#wrapper = new RunicRecordService(recordService, "*", {
+			options,
+			onError,
+			autoRefetch,
+			fetchRecords: (options) => recordService.getFullList(options)
+		})
 	}
 
-	async reload({
+	async refetch({
 		options,
 		onError = console.error
 	}: {
-		options?: RecordFullListOptions
+		options?: SendOptions
 		onError?(error: ClientResponseError): void
 	} = {}) {
-		try {
-			const fullList = await this.#wrapper.service.getFullList(options)
-			this.#wrapper.records = Object.fromEntries(fullList.map((record) => [record.id, record]))
-		} catch (error) {
-			onError(error as ClientResponseError)
-		}
+		this.#wrapper.refetch({ options, onError })
 	}
 
 	async update(
@@ -47,6 +57,10 @@ export class Collection<M extends RecordModel = RecordModel> {
 	}
 
 	get records() {
-		return this.#wrapper.getRecords()
+		return this.#wrapper.records
+	}
+
+	get lastFetchedAt() {
+		return this.#wrapper.lastFetchedAt
 	}
 }
