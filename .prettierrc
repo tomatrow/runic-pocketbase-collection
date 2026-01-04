@@ -4,6 +4,8 @@
 	"trailingComma": "none",
 	"printWidth": 100,
 	"semi": false,
+	"arrowParens": "avoid",
+	"experimentalTernaries": true,
 	"plugins": ["prettier-plugin-svelte"],
 	"overrides": [
 		{
