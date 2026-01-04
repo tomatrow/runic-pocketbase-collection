@@ -1,7 +1,15 @@
 {
 	"name": "runic-pocketbase-collection",
-	"version": "0.1.0",
+	"version": "1.0.0",
+	"description": "Reactive PocketBase collection wrapper for Svelte 5 with real-time sync and optimistic updates",
 	"license": "MIT",
+	"author": "AJ Caldwell <hello@ajcaldwell.dev>",
+	"repository": {
+		"type": "git",
+		"url": "git+https://github.com/tomatrow/runic-pocketbase-collection.git"
+	},
+	"homepage": "https://github.com/tomatrow/runic-pocketbase-collection#readme",
+	"bugs": "https://github.com/tomatrow/runic-pocketbase-collection/issues",
 	"scripts": {
 		"dev": "vite dev",
 		"database": "./database/pocketbase serve",
@@ -37,7 +45,7 @@
 	},
 	"packageManager": "pnpm@9.14.4",
 	"peerDependencies": {
-		"pocketbase": "^0.26.1",
+		"pocketbase": "^0.{26.1",
 		"svelte": "^5.7.0"
 	},
 	"devDependencies": {
