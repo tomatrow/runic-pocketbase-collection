@@ -14,22 +14,22 @@
 			<th>
 				<input
 					type="checkbox"
-					indeterminate={taskList.some((task) => task.done) && taskList.some((task) => !task.done)}
-					checked={!!taskList.length && taskList.every((task) => task.done)}
+					indeterminate={taskList.some(task => task.done) && taskList.some(task => !task.done)}
+					checked={!!taskList.length && taskList.every(task => task.done)}
 					onclick={() =>
 						tasks.update(
 							Object.fromEntries(
-								taskList.map((task) => [task.id, { done: !taskList.every((task) => task.done) }])
+								taskList.map(task => [task.id, { done: !taskList.every(task => task.done) }])
 							)
 						)}
 				/>
 			</th>
 			<th>
-				{taskList.filter((task) => task.done).length}/{taskList.length} done
+				{taskList.filter(task => task.done).length}/{taskList.length} done
 			</th>
 			<th>
 				<button
-					onclick={() => tasks.update(Object.fromEntries(taskList.map((task) => [task.id, null])))}
+					onclick={() => tasks.update(Object.fromEntries(taskList.map(task => [task.id, null])))}
 				>
 					❌
 				</button>
@@ -50,7 +50,7 @@
 					<input
 						type="text"
 						value={task.text}
-						oninput={(event) => tasks.update({ [task.id]: { text: event.currentTarget.value } })}
+						oninput={event => tasks.update({ [task.id]: { text: event.currentTarget.value } })}
 					/>
 				</td>
 				<td><button onclick={() => tasks.update({ [task.id]: null })}>❌</button></td>

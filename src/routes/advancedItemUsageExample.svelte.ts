@@ -1,3 +1,4 @@
+import { getAbortSignal } from "svelte"
 import PocketBase from "pocketbase"
 import { Item } from "$lib/index.js"
 
@@ -24,20 +25,18 @@ const task = new Item<TaskModel>(pb.collection("tasks"), taskId, {
 	options: { expand: "subtasks" }
 })
 
-// refetch with options and error handling
-await task.refetch({
-	options: { expand: "subtasks" },
-	onError: (error) => console.error("Failed to refetch:", error.message)
+// refetch on mount with cancellation
+$effect(() => {
+	task.refetch({
+		options: { signal: getAbortSignal() },
+		onError: error => console.error("Failed to refetch:", error.message)
+	})
 })
 
 // optimistic update with override
 await task.update(
 	{ priority: 1 },
-	{
-		// immediately reflect change before server responds
-		override: (prev) => ({ ...prev, priority: 1 }),
-		onError: (error) => console.error("Failed to update:", error.message)
-	}
+	{ onError: error => console.error("Failed to update:", error.message) }
 )
 
 // read updated record

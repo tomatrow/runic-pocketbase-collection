@@ -34,5 +34,5 @@ await tasks.update({
 
 // read expanded task
 console.log(
-	tasks.records[parentTaskId]?.expand.subtasks.some((subtask) => subtask.id === childTaskId)
+	tasks.records[parentTaskId]?.expand.subtasks.some(subtask => subtask.id === childTaskId)
 ) // logs: true
