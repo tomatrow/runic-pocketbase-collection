@@ -8,7 +8,7 @@
 		"type": "git",
 		"url": "git+https://github.com/tomatrow/runic-pocketbase-collection.git"
 	},
-	"homepage": "https://github.com/tomatrow/runic-pocketbase-collection#readme",
+	"homepage": "https://tomatrow.github.io/runic-pocketbase-collection",
 	"bugs": "https://github.com/tomatrow/runic-pocketbase-collection/issues",
 	"scripts": {
 		"dev": "vite dev",
