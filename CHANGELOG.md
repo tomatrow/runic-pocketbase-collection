@@ -17,3 +17,8 @@
 - refactor: introduce `RunicRecordService` as shared foundation for `Collection` and `Item`
 - fix: properly await refetch promises
 - docs: expanded README with installation and usage examples
+- fix: `pbid()` now generates IDs with uniform randomness, matching PocketBase's ID generation
+
+## 1.0.1
+
+- docs: added prerequisite documentation for enabling PocketBase Batch API

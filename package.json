@@ -1,6 +1,6 @@
 {
 	"name": "runic-pocketbase-collection",
-	"version": "1.0.0",
+	"version": "1.0.1",
 	"description": "Reactive PocketBase collection wrapper for Svelte 5 with real-time sync and optimistic updates",
 	"license": "MIT",
 	"author": "AJ Caldwell <hello@ajcaldwell.dev>",

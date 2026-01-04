@@ -46,6 +46,15 @@
 		<code>pnpm i -D runic-pocketbase-collection</code>
 	</section>
 
+	<section id="prerequisites">
+		<h2>Prerequisites</h2>
+		<p>This library uses PocketBase's Batch API. Enable it in your PocketBase Admin UI:</p>
+		<p>
+			<strong>Settings</strong> → <strong>Application</strong> → Enable
+			<strong>Batch requests</strong>
+		</p>
+	</section>
+
 	<section id="collection-usage">
 		<h2>Collection Usage</h2>
 

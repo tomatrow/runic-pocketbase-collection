@@ -14,6 +14,12 @@ Reactive PocketBase collection wrapper for Svelte 5 with real-time sync and opti
 pnpm add runic-pocketbase-collection pocketbase
 ```
 
+## Prerequisites
+
+This library uses PocketBase's Batch API. Enable it in your PocketBase Admin UI:
+
+**Settings** → **Application** → Enable **Batch requests**
+
 ## Quick Start
 
 ```ts
