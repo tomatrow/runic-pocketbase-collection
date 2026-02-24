@@ -22,3 +22,8 @@
 ## 1.0.1
 
 - docs: added prerequisite documentation for enabling PocketBase Batch API
+
+## 1.1.0
+
+- feat: add `updateSubscriptionOptions()` to `Collection`, `Item`, and `RunicRecordService` — updates subscription options at runtime and automatically resubscribes if a subscription is active
+- refactor: introduce internal `Subscription` interface (`restart` / `stop`) to manage subscription lifecycle in `RunicRecordService`

@@ -67,6 +67,27 @@ task.update({ done: true })
 const taskIsDone = $derived(task.record?.done)
 ```
 
+## Updating Subscription Options
+
+You can update the PocketBase subscription options (e.g. `expand`, `filter`) at any time. If a subscription is currently active, it will automatically unsubscribe and resubscribe with the new options, then refetch.
+
+```ts
+const tasks = new Collection(pb.collection("tasks"), {
+	options: { expand: "assignee" }
+})
+
+// Later, change options at runtime
+tasks.updateSubscriptionOptions({ expand: "assignee,project" })
+```
+
+Same API on `Item`:
+
+```ts
+const task = new Item(pb.collection("tasks"), "record_id")
+
+task.updateSubscriptionOptions({ expand: "assignee" })
+```
+
 ## License
 
 MIT
