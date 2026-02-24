@@ -9,6 +9,11 @@ import type {
 } from "pocketbase"
 import type { RecordUpdate, RequestConfig } from "./common.js"
 
+interface Subscription {
+	restart(): void
+	stop(): void
+}
+
 /**
  * Reactive wrapper around PocketBase's RecordService with real-time sync and optimistic updates.
  * Subscribes to collection changes and maintains a reactive record store.
@@ -24,6 +29,8 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 	#fetchRecords: (options?: SendOptions) => Promise<M[]>
 	/** Subscriber function created by createSubscriber that manages real-time subscription lifecycle */
 	#subscribe: () => void
+	/** Underlying subscription management object */
+	#subscription?: Subscription
 	/** Stack of override functions for optimistic updates */
 	#overrides = $state<Array<(prev: Record<string, M>) => Record<string, M>>>([])
 	/** Derived records with all pending optimistic overrides applied */
@@ -60,7 +67,9 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 		this.#options = options
 		this.#fetchRecords = fetchRecords
 
-		const start = (update: () => void) => {
+		const start = (update: () => void): Subscription => {
+			this.#subscription?.stop()
+
 			const unsubscribePromise = this.service.subscribe(
 				topic,
 				({ action, record }) => {
@@ -81,16 +90,25 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 				this.#options
 			)
 
-			if (autoRefetch) this.refetch({ onError, options })
+			if (autoRefetch) this.refetch({ onError })
 
-			return () => {
-				unsubscribePromise.then(unsubscribe => unsubscribe())
+			return {
+				restart: () => {
+					if (!this.#subscription) return
+					this.#subscription = start(update)
+				},
+				stop: () => {
+					unsubscribePromise.then(unsubscribe => unsubscribe())
+				}
 			}
 		}
 
 		this.#subscribe = createSubscriber(update => {
-			const stop = start(update)
-			return stop
+			this.#subscription = start(update)
+
+			return () => {
+				this.#subscription?.stop()
+			}
 		})
 	}
 
@@ -146,6 +164,16 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 		} catch (error) {
 			onError?.(error as ClientResponseError)
 		}
+	}
+
+	/**
+	 * Updates subscription options.
+	 * Restarts the subscription with new options if already subscribed.
+	 * @param options - New options for subscription
+	 */
+	updateSubscriptionOptions(options?: RecordSubscribeOptions) {
+		this.#options = options
+		this.#subscription?.restart()
 	}
 
 	/**
