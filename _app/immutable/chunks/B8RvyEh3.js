@@ -1,0 +1,1 @@
+import{v as c,w as i,x as n,y as f,b as u,z as s,A as o}from"./C75JBydu.js";function m(a){let e=0,r=n(0),t;return()=>{c()&&(i(r),f(()=>(e===0&&(t=u(()=>a(()=>s(r)))),e+=1,()=>{o(()=>{e-=1,e===0&&(t?.(),t=void 0,s(r))})})))}}export{m as c};
