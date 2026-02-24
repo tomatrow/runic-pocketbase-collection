@@ -41,3 +41,6 @@ await task.update(
 
 // read updated record
 console.log(task.record?.priority) // logs: 1
+
+// update subscription options to truncate the text to 200 characters
+task.updateSubscriptionOptions({ expand: "subtasks", fields: "*,text:excerpt(200,true)" })

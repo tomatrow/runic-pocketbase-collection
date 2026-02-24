@@ -36,3 +36,6 @@ await tasks.update({
 console.log(
 	tasks.records[parentTaskId]?.expand.subtasks.some(subtask => subtask.id === childTaskId)
 ) // logs: true
+
+// update filter for only done tasks
+tasks.updateSubscriptionOptions({ expand: "subtasks", filter: "done = true" })
