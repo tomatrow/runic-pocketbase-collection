@@ -59,7 +59,8 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 		this.service = recordService
 		this.#options = options
 		this.#fetchRecords = fetchRecords
-		this.#subscribe = createSubscriber(update => {
+
+		const start = (update: () => void) => {
 			const unsubscribePromise = this.service.subscribe(
 				topic,
 				({ action, record }) => {
@@ -85,6 +86,11 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 			return () => {
 				unsubscribePromise.then(unsubscribe => unsubscribe())
 			}
+		}
+
+		this.#subscribe = createSubscriber(update => {
+			const stop = start(update)
+			return stop
 		})
 	}
 
