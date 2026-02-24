@@ -27,3 +27,7 @@
 
 - feat: add `updateSubscriptionOptions()` to `Collection`, `Item`, and `RunicRecordService` — updates subscription options at runtime and automatically resubscribes if a subscription is active
 - refactor: introduce internal `Subscription` interface (`restart` / `stop`) to manage subscription lifecycle in `RunicRecordService`
+
+## 1.1.1
+
+- docs: keep readme simple, extend advanced examples
