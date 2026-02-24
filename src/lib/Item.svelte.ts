@@ -74,6 +74,15 @@ export class Item<M extends RecordModel = RecordModel> {
 	}
 
 	/**
+	 * Updates subscription options.
+	 * Restarts the subscription with new options if already subscribed.
+	 * @param options - New options for subscription
+	 */
+	updateSubscriptionOptions(options?: RecordSubscribeOptions) {
+		this.#service.updateSubscriptionOptions(options)
+	}
+
+	/**
 	 * The reactive record. Accessing this property triggers the real-time subscription.
 	 * @returns The record, or undefined if not yet loaded
 	 */

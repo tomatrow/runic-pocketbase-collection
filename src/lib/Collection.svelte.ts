@@ -70,6 +70,15 @@ export class Collection<M extends RecordModel = RecordModel> {
 	}
 
 	/**
+	 * Updates subscription options.
+	 * Restarts the subscription with new options if already subscribed.
+	 * @param options - New options for subscription
+	 */
+	updateSubscriptionOptions(options?: RecordSubscribeOptions) {
+		this.#service.updateSubscriptionOptions(options)
+	}
+
+	/**
 	 * Reactive record store. Accessing this property triggers the real-time subscription.
 	 * @returns Record object with all records keyed by ID, including pending optimistic updates
 	 */
