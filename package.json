@@ -45,7 +45,7 @@
 	},
 	"packageManager": "pnpm@9.14.4",
 	"peerDependencies": {
-		"pocketbase": "^0.{26.1",
+		"pocketbase": "^0.26.1",
 		"svelte": "^5.7.0"
 	},
 	"devDependencies": {
