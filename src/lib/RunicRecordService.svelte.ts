@@ -22,7 +22,7 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 	/** Underlying PocketBase RecordService instance */
 	service: RecordService<M>
 	/** Internal reactive store of records keyed by ID */
-	#records = $state<Record<string, M>>({})
+	#records = $state.raw<Record<string, M>>({})
 	/** Subscription/request options passed to PocketBase */
 	#options?: RecordSubscribeOptions
 	/** Function to fetch records from the server */
@@ -32,7 +32,7 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 	/** Underlying subscription management object */
 	#subscription?: Subscription
 	/** Stack of override functions for optimistic updates */
-	#overrides = $state<Array<(prev: Record<string, M>) => Record<string, M>>>([])
+	#overrides = $state.raw<Array<(prev: Record<string, M>) => Record<string, M>>>([])
 	/** Derived records with all pending optimistic overrides applied */
 	#recordsWithOverride = $derived(
 		this.#overrides.reduce((records, override) => override(records), this.#records)
@@ -67,21 +67,21 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 		this.#options = options
 		this.#fetchRecords = fetchRecords
 
-		const start = (update: () => void): Subscription => {
+		const start = (): Subscription => {
 			this.#subscription?.stop()
 
 			const unsubscribePromise = this.service.subscribe(
 				topic,
 				({ action, record }) => {
 					switch (action) {
-						case "delete":
-							delete this.#records[record.id]
-							update()
+						case "delete": {
+							const { [record.id]: _, ...rest } = this.#records
+							this.#records = rest
 							break
+						}
 						case "create":
 						case "update":
-							this.#records[record.id] = record
-							update()
+							this.#records = { ...this.#records, [record.id]: record }
 							break
 						default:
 							console.warn(`Unknown action: '${action}'`)
@@ -95,7 +95,7 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 			return {
 				restart: () => {
 					if (!this.#subscription) return
-					this.#subscription = start(update)
+					this.#subscription = start()
 				},
 				stop: () => {
 					unsubscribePromise.then(unsubscribe => unsubscribe())
@@ -103,8 +103,8 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 			}
 		}
 
-		this.#subscribe = createSubscriber(update => {
-			this.#subscription = start(update)
+		this.#subscribe = createSubscriber(() => {
+			this.#subscription = start()
 
 			return () => {
 				this.#subscription?.stop()
@@ -127,7 +127,7 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 		const updateValue = $state.snapshot(updateAction(untrack(() => this.#recordsWithOverride)))
 		const override = createOverride(updateAction)
 
-		untrack(() => this.#overrides.push(override))
+		untrack(() => (this.#overrides = [...this.#overrides, override]))
 
 		try {
 			const batch = this.service.client.createBatch()
@@ -143,7 +143,7 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 			onError?.(error as ClientResponseError)
 		}
 
-		untrack(() => this.#overrides.splice(this.#overrides.indexOf(override), 1))
+		untrack(() => (this.#overrides = this.#overrides.filter(o => o !== override)))
 	}
 
 	/**
@@ -156,11 +156,7 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 		try {
 			const list = await this.#fetchRecords({ ...this.#options, ...options })
 
-			// clear out old records and save new ones
-			// while also not breaking $state link
-			// (see https://svelte.dev/docs/svelte/context#Using-context-with-state)
-			for (const id in this.#records) delete this.#records[id]
-			for (const record of list) this.#records[record.id] = record
+			this.#records = Object.fromEntries(list.map(record => [record.id, record]))
 		} catch (error) {
 			onError?.(error as ClientResponseError)
 		}
