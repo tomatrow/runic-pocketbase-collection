@@ -31,3 +31,7 @@
 ## 1.1.1
 
 - docs: keep readme simple, extend advanced examples
+
+## 1.1.2
+
+- refactor: use shallow reactivity (`$state.raw`) for internal record storage
