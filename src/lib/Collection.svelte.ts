@@ -52,6 +52,7 @@ export class Collection<M extends RecordModel = RecordModel> {
 	 * Performs an optimistic batch update on the collection.
 	 * @param recordsUpdate - Either a static diff object or a function that receives current records
 	 *   and returns a diff. Keys are record IDs, values are partial updates (null = delete).
+	 *   Functions must be pure.
 	 * @param config - Optional request configuration
 	 * @param config.options - PocketBase request/subscription options
 	 * @param config.onError - Error handler callback (default: console.error)

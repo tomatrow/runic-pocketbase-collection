@@ -120,6 +120,7 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 	 * Applies changes to the UI immediately while the request is in flight.
 	 * @param updateAction - Function that receives current records and returns a diff object.
 	 *   Keys are record IDs, values are partial updates (null = delete).
+	 *   Functions must be pure.
 	 * @param config - Optional request configuration
 	 * @returns Promise that resolves when the batch request completes
 	 */

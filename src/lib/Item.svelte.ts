@@ -59,6 +59,7 @@ export class Item<M extends RecordModel = RecordModel> {
 	 * Performs an optimistic update on the record.
 	 * @param recordUpdate - Either a static partial update or a function that receives the current
 	 *   record (or undefined if not loaded) and returns a partial update. Use null values to delete fields.
+	 *   Functions must be pure.
 	 * @param config - Optional request configuration
 	 * @param config.options - PocketBase request/subscription options
 	 * @param config.onError - Error handler callback (default: console.error)

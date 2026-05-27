@@ -67,6 +67,19 @@ task.update({ done: true })
 const taskIsDone = $derived(task.record?.done)
 ```
 
+## Caveats
+
+Update callbacks must be **pure** (same `prev` always returns the same diff).
+
+```ts
+// Bad: pbid() runs on every reactive recomputation, producing a different ID each time
+tasks.update(() => ({ [pbid()]: { text: "New" } }))
+
+// Good: pbid() runs once; the stable ID is closed over by the callback
+const id = pbid()
+tasks.update(prev => ({ ...prev, [id]: { text: "New" } }))
+```
+
 ## License
 
 MIT
