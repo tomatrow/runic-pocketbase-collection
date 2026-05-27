@@ -35,3 +35,9 @@
 ## 1.1.2
 
 - refactor: use shallow reactivity (`$state.raw`) for internal record storage
+
+## 1.1.3
+
+- fix: clear pending optimistic override even when the batch request throws (`update()` cleanup moved into `finally`)
+- fix: catch subscription setup and teardown errors via `onError` and reset internal subscription state on stop
+- docs: document the purity requirement for `update()` callbacks in README and JSDoc on `Collection`, `Item`, and `RunicRecordService`
