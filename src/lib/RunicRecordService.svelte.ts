@@ -141,9 +141,9 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 			await batch.send({ ...this.#options, ...options })
 		} catch (error) {
 			onError?.(error as ClientResponseError)
+		} finally {
+			untrack(() => (this.#overrides = this.#overrides.filter(o => o !== override)))
 		}
-
-		untrack(() => (this.#overrides = this.#overrides.filter(o => o !== override)))
 	}
 
 	/**
