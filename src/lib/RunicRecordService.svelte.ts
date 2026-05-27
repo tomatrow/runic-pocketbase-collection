@@ -70,25 +70,27 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 		const start = (): Subscription => {
 			this.#subscription?.stop()
 
-			const unsubscribePromise = this.service.subscribe(
-				topic,
-				({ action, record }) => {
-					switch (action) {
-						case "delete": {
-							const { [record.id]: _, ...rest } = this.#records
-							this.#records = rest
-							break
+			const unsubscribePromise = this.service
+				.subscribe(
+					topic,
+					({ action, record }) => {
+						switch (action) {
+							case "delete": {
+								const { [record.id]: _, ...rest } = this.#records
+								this.#records = rest
+								break
+							}
+							case "create":
+							case "update":
+								this.#records = { ...this.#records, [record.id]: record }
+								break
+							default:
+								console.warn(`Unknown action: '${action}'`)
 						}
-						case "create":
-						case "update":
-							this.#records = { ...this.#records, [record.id]: record }
-							break
-						default:
-							console.warn(`Unknown action: '${action}'`)
-					}
-				},
-				this.#options
-			)
+					},
+					this.#options
+				)
+				.catch(onError)
 
 			if (autoRefetch) this.refetch({ onError })
 
@@ -98,7 +100,8 @@ export class RunicRecordService<M extends RecordModel = RecordModel> {
 					this.#subscription = start()
 				},
 				stop: () => {
-					unsubscribePromise.then(unsubscribe => unsubscribe())
+					unsubscribePromise.then(unsubscribe => unsubscribe?.()).catch(onError)
+					this.#subscription = undefined
 				}
 			}
 		}
